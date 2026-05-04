@@ -23,12 +23,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Cormorant Garamond', 'serif'],
-        sans: ['DM Sans', 'sans-serif'],
-        jsfontFamily: {
-          display: ['Cormorant Garamond', 'serif'],
-          sans: ['DM Sans', 'sans-serif'],
-        },
+        display: ['Playfair Display', 'serif'],
+        sans: ['Outfit', 'sans-serif'],
       },
     },
   },

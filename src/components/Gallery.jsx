@@ -78,7 +78,7 @@ const Gallery = () => {
   };
 
   return (
-    <section id="gallery" className="bg-surface overflow-hidden">
+    <section id="work" className="bg-surface overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <div className="mb-16">

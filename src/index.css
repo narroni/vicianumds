@@ -15,14 +15,14 @@
   --color-jscolors-heading: #EDE9E2;
   --color-jscolors-muted: #A8B5A0;
 
-  --font-display: "Cormorant Garamond", serif;
-  --font-sans: "DM Sans", sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-sans: "Outfit", sans-serif;
 }
 
 :root {
   background-color: #0F1712;
   color: #A8B5A0;
-  font-family: "DM Sans", sans-serif;
+  font-family: "Outfit", sans-serif;
   
   /* Fluid Spacing & Typography */
   --page-x: clamp(1.25rem, 5vw, 5rem);
@@ -34,7 +34,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   overscroll-behavior: none;
 }
 
@@ -78,6 +77,7 @@ section {
   padding-right: var(--page-x);
   padding-top: var(--section-py);
   padding-bottom: var(--section-py);
+  scroll-margin-top: 80px;
 }
 
 .font-display { font-family: "Cormorant Garamond", serif; }

@@ -1,138 +1,89 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 const services = [
   {
-    title: "Porcelain Crowns",
-    description: "Natural-looking full coverage restorations"
+    title: "Molar Crowns",
+    description: "High-quality, durable protection for weakened teeth.",
+    icon: "/images/crown.png",
+  },
+  {
+    title: "Dental Veneers",
+    description: "Custom-made shells for a flawless, natural-looking smile.",
+    icon: "/images/veneer.png",
   },
   {
     title: "Dental Bridges",
-    description: "Fixed multi-unit restorations with precision fit"
+    description: "Seamlessly fill gaps and restore your bite's functionality.",
+    icon: "/images/bridge.png",
   },
   {
-    title: "Veneers",
-    description: "Ultra-thin ceramic shells for aesthetic cases"
-  },
-  {
-    title: "Implant Crowns",
-    description: "Screw-retained and cement-retained options"
-  },
-  {
-    title: "Full Dentures",
-    description: "Complete removable prosthetics, full arch"
-  },
-  {
-    title: "Inlays & Onlays",
-    description: "Conservative indirect ceramic restorations"
+    title: "Dental Implants",
+    description: "Permanent, gold-standard solutions for missing teeth.",
+    icon: "/images/implant.png",
   }
 ];
 
-const ServiceCard = ({ service, index }) => {
-  const cardRef = useRef(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-
-  const handleMouseMove = (e) => {
-    if (window.innerWidth < 768) return; // Disable tilt on mobile
-    if (!cardRef.current) return;
-    
-    const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const mouseX = e.clientX - centerX;
-    const mouseY = e.clientY - centerY;
-    
-    const rY = (mouseX / (rect.width / 2)) * 10;
-    const rX = -(mouseY / (rect.height / 2)) * 10;
-    
-    setRotateX(rX);
-    setRotateY(rY);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
-
+export default function Services() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-      style={{ perspective: '800px' }}
-      className="group snap-start min-w-[280px] md:min-w-0"
-    >
-      <div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-          transition: rotateX === 0 && rotateY === 0 ? 'transform 0.5s ease' : 'none'
-        }}
-        className="relative bg-bg border border-border p-7 rounded-lg h-full overflow-hidden flex flex-col gap-4 transform-gpu"
-      >
-        <motion.div
-          initial={{ width: 0 }}
-          whileHover={{ width: '100%' }}
-          className="absolute top-0 left-0 h-[2px] bg-accent"
-        />
-
-        <div className="flex flex-col gap-2 relative z-10">
-          <h3 className="font-display text-heading leading-tight">
-            {service.title}
-          </h3>
-          <p className="font-sans text-sm text-muted leading-relaxed">
-            {service.description}
-          </p>
-        </div>
-        
-        <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-      </div>
-    </motion.div>
-  );
-};
-
-const Services = () => {
-  return (
-    <section id="services" className="bg-surface overflow-hidden">
+    <section id="services" className="bg-[#1C2B22] py-24 px-6 md:px-16">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-20">
-          <motion.span 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="block text-accent font-sans text-xs uppercase tracking-[0.2em] mb-4"
-          >
-            What We Craft
-          </motion.span>
+        {/* Header */}
+        <div className="text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-display text-heading max-w-2xl"
+            className="font-display text-5xl md:text-6xl text-heading mb-4"
           >
-            Every Restoration, Perfected.
+            Our Services
           </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-accent text-sm uppercase tracking-[0.3em] font-medium"
+          >
+            Precision. Aesthetics. Durability.
+          </motion.p>
         </div>
 
-        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 overflow-x-auto md:overflow-x-visible pb-8 snap-x-mandatory scroll-hint-animation">
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
-            <ServiceCard key={index} service={service} index={index} />
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(143, 196, 159, 0.15)"
+              }}
+              className="bg-[#24362B] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center group transition-all duration-300"
+            >
+              {/* Icon Container - Maximized for premium impact */}
+              <div className="w-full h-64 mb-6 flex items-center justify-center relative overflow-hidden rounded-xl">
+                <img 
+                  src={service.icon} 
+                  alt={service.title} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+
+              {/* Text */}
+              <h3 className="font-display text-2xl text-white mb-3">
+                {service.title}
+              </h3>
+              <p className="text-muted text-sm leading-relaxed">
+                {service.description}
+              </p>
+            </motion.div>
           ))}
-        </div>
-        
-        {/* Mobile Scroll Hint Label */}
-        <div className="md:hidden text-center mt-4 opacity-50">
-          <span className="text-[10px] uppercase tracking-widest text-muted">Scroll to explore services</span>
         </div>
       </div>
     </section>
   );
-};
-
-export default Services;
+}

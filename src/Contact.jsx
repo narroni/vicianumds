@@ -66,7 +66,7 @@ export default function Contact() {
             <div className="w-8 h-px bg-accent flex-shrink-0" />
             <span className="text-accent text-xs uppercase tracking-widest">Contact</span>
           </div>
-          <h2 className="font-display italic text-4xl md:text-5xl text-heading leading-[1.1] mb-4">
+          <h2 className="font-display italic text-5xl md:text-6xl font-bold text-heading leading-[1.1] mb-4">
             Ready to Work Together?
           </h2>
           <p className="text-muted text-sm leading-relaxed">

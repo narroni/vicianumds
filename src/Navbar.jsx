@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { scrollToSection } from './utils/scrollTo'
 
-const NAV_LINKS = ['Services', 'Process', 'Work', 'About', 'Contact']
-
-const scrollToSection = (id) => {
-  const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
+const NAV_LINKS = [
+  { name: 'About',    id: 'about'    },
+  { name: 'Services', id: 'services' },
+  { name: 'Process',  id: 'process'  },
+  { name: 'Work',     id: 'work'     },
+  { name: 'Contact',  id: 'contact'  },
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -19,13 +21,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  const closeMenu = () => setMobileOpen(false)
+  const handleNav = (id) => {
+    setMobileOpen(false)
+    scrollToSection(id)
+  }
 
   return (
     <>
@@ -40,22 +44,23 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-6 flex items-center justify-between">
-          {/* Logo */}
-          <a
-            href="#"
-            className="font-display text-[22px] text-heading leading-none min-h-0"
+
+          {/* Logo → scroll to top */}
+          <button
+            onClick={() => handleNav('top')}
+            className="font-display text-2xl font-bold text-heading leading-none cursor-pointer border-none bg-transparent p-0"
             data-cursor="hover"
           >
             Vicianum<span className="text-accent">DS</span>
-          </a>
+          </button>
 
-          {/* Center nav — desktop only */}
+          {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-10">
             {NAV_LINKS.map((link) => (
-              <motion.a
-                key={link}
-                onClick={() => scrollToSection(link.toLowerCase())}
-                className="relative uppercase text-xs tracking-widest min-h-0 cursor-pointer"
+              <motion.button
+                key={link.name}
+                onClick={() => handleNav(link.id)}
+                className="relative uppercase text-xs tracking-widest cursor-pointer border-none bg-transparent p-0"
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
@@ -63,12 +68,12 @@ export default function Navbar() {
               >
                 <motion.span
                   variants={{
-                    rest: { color: '#A8B5A0' },
+                    rest:  { color: '#A8B5A0' },
                     hover: { color: '#8FC49F' },
                   }}
                   transition={{ duration: 0.2 }}
                 >
-                  {link}
+                  {link.name}
                 </motion.span>
                 <motion.span
                   className="absolute bottom-[-3px] left-0 h-px w-full bg-accent"
@@ -76,15 +81,15 @@ export default function Navbar() {
                   variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
                   transition={{ duration: 0.25, ease: 'easeOut' }}
                 />
-              </motion.a>
+              </motion.button>
             ))}
           </div>
 
-          {/* Right: CTA + hamburger */}
+          {/* CTA + hamburger */}
           <div className="flex items-center gap-3">
-            <motion.a
-              onClick={() => scrollToSection('contact')}
-              className="hidden md:inline-flex border border-accent text-accent text-xs uppercase tracking-widest px-5 py-2.5 min-h-0 cursor-pointer"
+            <motion.button
+              onClick={() => handleNav('contact')}
+              className="hidden md:inline-flex border border-accent text-accent text-xs uppercase tracking-widest px-5 py-2.5 cursor-pointer bg-transparent"
               animate={{ scale: [1, 1.03, 1] }}
               whileHover={{ backgroundColor: '#8FC49F', color: '#0F1712', scale: 1 }}
               whileTap={{ scale: 0.97 }}
@@ -92,10 +97,10 @@ export default function Navbar() {
               data-cursor="hover"
             >
               Request a Quote
-            </motion.a>
+            </motion.button>
 
             <button
-              className="md:hidden text-muted w-11 h-11 flex items-center justify-center"
+              className="md:hidden text-muted w-11 h-11 flex items-center justify-center border-none bg-transparent"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label="Toggle menu"
             >
@@ -105,7 +110,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Full-screen mobile menu — slides down from top */}
+      {/* Mobile full-screen menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -115,39 +120,36 @@ export default function Navbar() {
             exit={{ y: '-100%' }}
             transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
           >
-            {/* Close button */}
             <button
-              className="absolute top-5 right-5 w-11 h-11 flex items-center justify-center text-muted"
-              onClick={closeMenu}
+              className="absolute top-5 right-5 w-11 h-11 flex items-center justify-center text-muted border-none bg-transparent"
+              onClick={() => setMobileOpen(false)}
               aria-label="Close menu"
             >
               <X size={22} />
             </button>
 
-            {/* Nav links — 24px Cormorant Garamond */}
             {NAV_LINKS.map((link, i) => (
-              <motion.a
-                key={link}
-                onClick={() => { scrollToSection(link.toLowerCase()); closeMenu() }}
-                className="font-display text-2xl text-heading hover:text-accent transition-colors min-h-0 cursor-pointer"
+              <motion.button
+                key={link.name}
+                onClick={() => handleNav(link.id)}
+                className="font-display text-3xl font-bold text-heading hover:text-accent transition-colors cursor-pointer border-none bg-transparent"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 + i * 0.06, duration: 0.4 }}
               >
-                {link}
-              </motion.a>
+                {link.name}
+              </motion.button>
             ))}
 
-            {/* CTA */}
-            <motion.a
-              onClick={() => { scrollToSection('contact'); closeMenu() }}
-              className="mt-4 border border-accent text-accent text-xs uppercase tracking-widest px-6 py-3 hover:bg-accent hover:text-bg transition-colors cursor-pointer"
+            <motion.button
+              onClick={() => handleNav('contact')}
+              className="mt-4 border border-accent text-accent text-xs uppercase tracking-widest px-6 py-3 hover:bg-accent hover:text-bg transition-colors cursor-pointer bg-transparent"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.4 }}
             >
               Request a Quote
-            </motion.a>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

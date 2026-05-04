@@ -18,7 +18,7 @@ const Process = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-display text-4xl md:text-5xl lg:text-6xl text-heading"
+            className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-heading"
           >
             From Impression to Delivery
           </motion.h2>

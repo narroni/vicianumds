@@ -83,7 +83,7 @@ export default function About() {
           </div>
 
           {/* Quote — 2xl mobile → 4xl desktop */}
-          <blockquote className="font-display italic text-2xl md:text-4xl text-heading leading-[1.2] mb-6 md:mb-8">
+          <blockquote className="font-display italic text-3xl md:text-5xl font-bold text-heading leading-[1.2] mb-6 md:mb-8">
             "Every restoration we craft is a commitment to your patient's smile."
           </blockquote>
 
