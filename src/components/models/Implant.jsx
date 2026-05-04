@@ -1,56 +1,61 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 
-export default function Implant({ isActive, isDragging, dragDelta }) {
+export default function Implant({ isDragging, dragDelta }) {
   const group = useRef()
-  const speed = isActive ? 0.003 : 0.008
 
   useFrame(() => {
-    if (!isDragging && group.current) group.current.rotation.y += speed
-    if (isDragging && group.current) {
+    if (!group.current) return
+    if (isDragging) {
       group.current.rotation.y += dragDelta.x * 0.01
       group.current.rotation.x += dragDelta.y * 0.01
+    } else {
+      group.current.rotation.y += 0.006
     }
   })
 
+  const ceramicMat = { color: '#EDE9E2', roughness: 0.1, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08 }
+  const titaniumMat = { color: '#B0B4B8', roughness: 0.25, metalness: 0.92, clearcoat: 0.3 }
+  const threadMat = { color: '#9A9EA2', roughness: 0.35, metalness: 0.9 }
+
   return (
-    <group ref={group}>
-      {/* Crown on top */}
-      <mesh position={[0, 0.75, 0]}>
-        <cylinderGeometry args={[0.38, 0.3, 0.6, 64]} />
-        <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} metalness={0.02} clearcoat={1} clearcoatRoughness={0.08} />
+    <group ref={group} position={[0, -0.1, 0]}>
+      {/* Ceramic crown */}
+      <mesh position={[0, 1.05, 0]}>
+        <cylinderGeometry args={[0.36, 0.28, 0.55, 56]} />
+        <meshPhysicalMaterial {...ceramicMat} />
       </mesh>
-      <mesh position={[0, 1.08, 0]}>
-        <sphereGeometry args={[0.38, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2.1]} />
-        <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} metalness={0.02} clearcoat={1} />
+      <mesh position={[0, 1.34, 0]} scale={[1, 0.38, 1]}>
+        <sphereGeometry args={[0.36, 56, 56]} />
+        <meshPhysicalMaterial {...ceramicMat} />
       </mesh>
-      {[[-0.14, 1.12, -0.14], [0.14, 1.12, -0.14], [-0.14, 1.12, 0.14], [0.14, 1.12, 0.14]].map((pos, i) => (
-        <mesh key={i} position={pos}>
-          <sphereGeometry args={[0.09, 32, 32]} />
-          <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} clearcoat={1} />
+      {[[-0.13, 1.42, -0.13],[0.13, 1.42, -0.13],[-0.13, 1.42, 0.13],[0.13, 1.42, 0.13]].map((p, i) => (
+        <mesh key={i} position={p}>
+          <sphereGeometry args={[0.085, 24, 24]} />
+          <meshPhysicalMaterial {...ceramicMat} />
         </mesh>
       ))}
       {/* Abutment */}
-      <mesh position={[0, 0.3, 0]}>
-        <cylinderGeometry args={[0.16, 0.2, 0.55, 32]} />
-        <meshPhysicalMaterial color="#C8C8C8" roughness={0.2} metalness={0.9} clearcoat={0.5} />
+      <mesh position={[0, 0.62, 0]}>
+        <cylinderGeometry args={[0.15, 0.2, 0.6, 32]} />
+        <meshPhysicalMaterial {...titaniumMat} />
       </mesh>
-      {/* Implant fixture (screw) */}
-      <mesh position={[0, -0.35, 0]}>
-        <cylinderGeometry args={[0.14, 0.1, 1.0, 32]} />
-        <meshPhysicalMaterial color="#A8A8A8" roughness={0.3} metalness={0.95} />
+      {/* Implant body */}
+      <mesh position={[0, 0.0, 0]}>
+        <cylinderGeometry args={[0.16, 0.16, 0.7, 32]} />
+        <meshPhysicalMaterial {...titaniumMat} />
       </mesh>
       {/* Screw threads */}
-      {Array.from({ length: 8 }).map((_, i) => (
-        <mesh key={i} position={[0, -0.0 - i * 0.11, 0]}>
-          <torusGeometry args={[0.14, 0.025, 8, 32]} />
-          <meshPhysicalMaterial color="#909090" roughness={0.4} metalness={0.95} />
+      {Array.from({ length: 9 }).map((_, i) => (
+        <mesh key={i} position={[0, -0.08 - i * 0.1, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.16, 0.022, 10, 32]} />
+          <meshPhysicalMaterial {...threadMat} />
         </mesh>
       ))}
-      {/* Screw tip */}
-      <mesh position={[0, -0.9, 0]}>
-        <coneGeometry args={[0.1, 0.2, 32]} />
-        <meshPhysicalMaterial color="#A8A8A8" roughness={0.3} metalness={0.95} />
+      {/* Tapered tip */}
+      <mesh position={[0, -0.98, 0]}>
+        <cylinderGeometry args={[0.16, 0.04, 0.2, 32]} />
+        <meshPhysicalMaterial {...titaniumMat} />
       </mesh>
     </group>
   )

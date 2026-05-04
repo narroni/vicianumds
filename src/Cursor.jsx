@@ -1,106 +1,78 @@
 import { useEffect, useRef } from 'react'
 
-const isTouch =
-  typeof window !== 'undefined' &&
-  ('ontouchstart' in window || navigator.maxTouchPoints > 0)
-
-function Cursor() {
+export default function Cursor() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
 
   useEffect(() => {
-    let mouseX = window.innerWidth / 2
-    let mouseY = window.innerHeight / 2
-    let ringX = mouseX
-    let ringY = mouseY
-    let rafId
+    if ('ontouchstart' in window) return
 
-    const onMouseMove = (e) => {
+    let mouseX = 0, mouseY = 0
+    let ringX = 0, ringY = 0
+    let animFrame
+
+    const onMove = (e) => {
       mouseX = e.clientX
       mouseY = e.clientY
     }
 
-    const onMouseOver = (e) => {
-      const hovering = !!(
-        e.target.closest('a') ||
-        e.target.closest('button') ||
-        e.target.closest('[data-cursor="hover"]')
-      )
-      if (dotRef.current) {
-        dotRef.current.style.scale = hovering ? '2.5' : '1'
-      }
-      if (ringRef.current) {
-        ringRef.current.style.scale = hovering ? '1.5' : '1'
-      }
-    }
-
-    const animate = () => {
-      ringX += (mouseX - ringX) * 0.08
-      ringY += (mouseY - ringY) * 0.08
+    const tick = () => {
+      ringX += (mouseX - ringX) * 0.12
+      ringY += (mouseY - ringY) * 0.12
 
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`
+        dotRef.current.style.left = mouseX + 'px'
+        dotRef.current.style.top = mouseY + 'px'
       }
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`
+        ringRef.current.style.left = ringX + 'px'
+        ringRef.current.style.top = ringY + 'px'
       }
-
-      rafId = requestAnimationFrame(animate)
+      animFrame = requestAnimationFrame(tick)
     }
 
-    window.addEventListener('mousemove', onMouseMove, { passive: true })
-    window.addEventListener('mouseover', onMouseOver, { passive: true })
-    rafId = requestAnimationFrame(animate)
+    window.addEventListener('mousemove', onMove, { passive: true })
+    animFrame = requestAnimationFrame(tick)
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseover', onMouseOver)
-      cancelAnimationFrame(rafId)
+      window.removeEventListener('mousemove', onMove)
+      cancelAnimationFrame(animFrame)
     }
   }, [])
 
+  if ('ontouchstart' in window) return null
+
   return (
     <>
-      {/* Dot — follows mouse exactly */}
       <div
         ref={dotRef}
         style={{
           position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 16,
-          height: 16,
+          width: '8px',
+          height: '8px',
+          background: '#8FC49F',
           borderRadius: '50%',
-          backgroundColor: '#8FC49F',
           pointerEvents: 'none',
           zIndex: 9999,
-          mixBlendMode: 'difference',
-          willChange: 'transform',
-          transition: 'scale 0.15s ease',
+          transform: 'translate(-50%, -50%)',
+          willChange: 'left, top',
         }}
       />
-      {/* Ring — lerp trails behind */}
       <div
         ref={ringRef}
         style={{
           position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 40,
-          height: 40,
+          width: '32px',
+          height: '32px',
+          border: '1.5px solid #8FC49F',
           borderRadius: '50%',
-          border: '1px solid rgba(143, 196, 159, 0.3)',
           pointerEvents: 'none',
           zIndex: 9998,
-          willChange: 'transform',
-          transition: 'scale 0.15s ease',
+          transform: 'translate(-50%, -50%)',
+          opacity: 0.5,
+          willChange: 'left, top',
         }}
       />
     </>
   )
-}
-
-export default function CursorWrapper() {
-  if (isTouch) return null
-  return <Cursor />
 }

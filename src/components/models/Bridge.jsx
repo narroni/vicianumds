@@ -1,65 +1,59 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 
-function SingleCrown({ position, scale = 1 }) {
+const mat = { color: '#EDE9E2', roughness: 0.12, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.1 }
+
+function MiniCrown({ x }) {
   return (
-    <group position={position} scale={scale}>
+    <group position={[x, 0, 0]}>
       <mesh position={[0, 0.1, 0]}>
-        <cylinderGeometry args={[0.28, 0.22, 0.7, 64]} />
-        <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} metalness={0.02} clearcoat={1} clearcoatRoughness={0.08} />
+        <cylinderGeometry args={[0.26, 0.2, 0.7, 48]} />
+        <meshPhysicalMaterial {...mat} />
       </mesh>
-      <mesh position={[0, 0.48, 0]}>
-        <sphereGeometry args={[0.28, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} metalness={0.02} clearcoat={1} />
+      <mesh position={[0, 0.48, 0]} scale={[1, 0.4, 1]}>
+        <sphereGeometry args={[0.26, 48, 48]} />
+        <meshPhysicalMaterial {...mat} />
       </mesh>
-      {[[-0.1, 0.54, -0.1], [0.1, 0.54, -0.1], [-0.1, 0.54, 0.1], [0.1, 0.54, 0.1]].map((pos, i) => (
-        <mesh key={i} position={pos}>
-          <sphereGeometry args={[0.07, 32, 32]} />
-          <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} clearcoat={1} />
+      {[[-0.1, 0.56, -0.1],[0.1, 0.56, -0.1],[-0.1, 0.56, 0.1],[0.1, 0.56, 0.1]].map((p, i) => (
+        <mesh key={i} position={p}>
+          <sphereGeometry args={[0.07, 24, 24]} />
+          <meshPhysicalMaterial {...mat} />
         </mesh>
       ))}
+      <mesh position={[0, -0.26, 0]}>
+        <torusGeometry args={[0.2, 0.025, 12, 48]} />
+        <meshPhysicalMaterial color="#D4D0C8" roughness={0.15} clearcoat={0.5} />
+      </mesh>
     </group>
   )
 }
 
-export default function Bridge({ isActive, isDragging, dragDelta }) {
+export default function Bridge({ isDragging, dragDelta }) {
   const group = useRef()
-  const speed = isActive ? 0.003 : 0.008
 
   useFrame(() => {
-    if (!isDragging && group.current) group.current.rotation.y += speed
-    if (isDragging && group.current) {
+    if (!group.current) return
+    if (isDragging) {
       group.current.rotation.y += dragDelta.x * 0.01
       group.current.rotation.x += dragDelta.y * 0.01
+    } else {
+      group.current.rotation.y += 0.006
     }
   })
 
   return (
-    <group ref={group} scale={0.85}>
-      <SingleCrown position={[-0.72, 0, 0]} />
-      <SingleCrown position={[0.72, 0, 0]} />
-      {/* Pontic (middle fake tooth) */}
-      <mesh position={[0, 0.05, 0]}>
-        <cylinderGeometry args={[0.26, 0.2, 0.65, 64]} />
-        <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} metalness={0.02} clearcoat={1} />
+    <group ref={group} scale={0.9}>
+      <MiniCrown x={-0.75} />
+      <MiniCrown x={0} />
+      <MiniCrown x={0.75} />
+      {/* Connector bars between crowns */}
+      <mesh position={[-0.375, 0.05, 0]}>
+        <boxGeometry args={[0.3, 0.22, 0.18]} />
+        <meshPhysicalMaterial color="#E0DCD4" roughness={0.15} clearcoat={0.7} />
       </mesh>
-      <mesh position={[0, 0.4, 0]}>
-        <sphereGeometry args={[0.26, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshPhysicalMaterial color="#EDE9E2" roughness={0.08} clearcoat={1} />
-      </mesh>
-      {/* Connector bars */}
-      <mesh position={[-0.36, 0.08, 0]}>
-        <boxGeometry args={[0.36, 0.18, 0.22]} />
-        <meshPhysicalMaterial color="#E8E4DE" roughness={0.1} metalness={0.02} clearcoat={0.8} />
-      </mesh>
-      <mesh position={[0.36, 0.08, 0]}>
-        <boxGeometry args={[0.36, 0.18, 0.22]} />
-        <meshPhysicalMaterial color="#E8E4DE" roughness={0.1} metalness={0.02} clearcoat={0.8} />
-      </mesh>
-      {/* Base bar */}
-      <mesh position={[0, -0.3, 0]}>
-        <boxGeometry args={[1.55, 0.08, 0.3]} />
-        <meshPhysicalMaterial color="#D4CFC8" roughness={0.12} metalness={0.05} clearcoat={0.6} />
+      <mesh position={[0.375, 0.05, 0]}>
+        <boxGeometry args={[0.3, 0.22, 0.18]} />
+        <meshPhysicalMaterial color="#E0DCD4" roughness={0.15} clearcoat={0.7} />
       </mesh>
     </group>
   )
