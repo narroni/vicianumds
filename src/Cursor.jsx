@@ -1,72 +1,105 @@
-import { useEffect, useState } from 'react'
-import { motion, useSpring, useMotionValue } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 
-// Only render on true pointer devices — never on touch
-const isTouch = typeof window !== 'undefined' && (
-  'ontouchstart' in window || navigator.maxTouchPoints > 0
-)
+const isTouch =
+  typeof window !== 'undefined' &&
+  ('ontouchstart' in window || navigator.maxTouchPoints > 0)
 
-const Cursor = () => {
-  const [isHovering, setIsHovering] = useState(false)
-  const cursorX = useMotionValue(-100)
-  const cursorY = useMotionValue(-100)
-
-  const springConfig = { damping: 25, stiffness: 400 }
-  const cursorXSpring = useSpring(cursorX, springConfig)
-  const cursorYSpring = useSpring(cursorY, springConfig)
+function Cursor() {
+  const dotRef = useRef(null)
+  const ringRef = useRef(null)
 
   useEffect(() => {
-    const moveCursor = (e) => {
-      cursorX.set(e.clientX)
-      cursorY.set(e.clientY)
+    let mouseX = window.innerWidth / 2
+    let mouseY = window.innerHeight / 2
+    let ringX = mouseX
+    let ringY = mouseY
+    let rafId
+
+    const onMouseMove = (e) => {
+      mouseX = e.clientX
+      mouseY = e.clientY
     }
 
-    const handleMouseOver = (e) => {
-      const target = e.target
-      setIsHovering(
-        !!(
-          target.closest('a') ||
-          target.closest('button') ||
-          target.closest('[data-cursor="hover"]')
-        )
+    const onMouseOver = (e) => {
+      const hovering = !!(
+        e.target.closest('a') ||
+        e.target.closest('button') ||
+        e.target.closest('[data-cursor="hover"]')
       )
+      if (dotRef.current) {
+        dotRef.current.style.scale = hovering ? '2.5' : '1'
+      }
+      if (ringRef.current) {
+        ringRef.current.style.scale = hovering ? '1.5' : '1'
+      }
     }
 
-    window.addEventListener('mousemove', moveCursor)
-    window.addEventListener('mouseover', handleMouseOver)
-    return () => {
-      window.removeEventListener('mousemove', moveCursor)
-      window.removeEventListener('mouseover', handleMouseOver)
+    const animate = () => {
+      ringX += (mouseX - ringX) * 0.08
+      ringY += (mouseY - ringY) * 0.08
+
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`
+      }
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`
+      }
+
+      rafId = requestAnimationFrame(animate)
     }
-  }, [cursorX, cursorY])
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    window.addEventListener('mouseover', onMouseOver, { passive: true })
+    rafId = requestAnimationFrame(animate)
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseover', onMouseOver)
+      cancelAnimationFrame(rafId)
+    }
+  }, [])
 
   return (
     <>
-      <motion.div
-        className="fixed top-0 left-0 w-4 h-4 bg-accent rounded-full pointer-events-none z-[9999] mix-blend-difference"
+      {/* Dot — follows mouse exactly */}
+      <div
+        ref={dotRef}
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: '-50%',
-          translateY: '-50%',
-          scale: isHovering ? 2.5 : 1,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 16,
+          height: 16,
+          borderRadius: '50%',
+          backgroundColor: '#8FC49F',
+          pointerEvents: 'none',
+          zIndex: 9999,
+          mixBlendMode: 'difference',
+          willChange: 'transform',
+          transition: 'scale 0.15s ease',
         }}
       />
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-accent/30 rounded-full pointer-events-none z-[9998]"
+      {/* Ring — lerp trails behind */}
+      <div
+        ref={ringRef}
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: '-50%',
-          translateY: '-50%',
-          scale: isHovering ? 1.5 : 1,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 40,
+          height: 40,
+          borderRadius: '50%',
+          border: '1px solid rgba(143, 196, 159, 0.3)',
+          pointerEvents: 'none',
+          zIndex: 9998,
+          willChange: 'transform',
+          transition: 'scale 0.15s ease',
         }}
       />
     </>
   )
 }
 
-// Export a wrapper that skips rendering on touch devices
 export default function CursorWrapper() {
   if (isTouch) return null
   return <Cursor />

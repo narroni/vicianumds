@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, Phone, MapPin, Check } from 'lucide-react'
 
+// Replace with your Formspree endpoint: https://formspree.io/f/XXXXXXXX
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/XXXXXXXX'
+
 const CONTACT_INFO = [
-  { Icon: Mail,    label: 'info@vicianumds.com' },
-  { Icon: Phone,   label: '+1 (555) 012-3456' },
-  { Icon: MapPin,  label: 'Chicago, IL' },
+  { Icon: Mail,   label: 'info@vicianumds.com' },
+  { Icon: Phone,  label: '+383 44 123 456' },
+  { Icon: MapPin, label: 'Prishtina, Kosovo' },
 ]
 
 const FIELDS = [
@@ -18,16 +21,40 @@ const FIELDS = [
 const baseInput =
   'w-full bg-surface border border-border text-heading rounded-lg px-4 py-3 text-sm outline-none focus:border-accent placeholder:text-muted/40'
 
+function Spinner() {
+  return (
+    <svg
+      className="animate-spin h-4 w-4"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+    </svg>
+  )
+}
+
 export default function Contact() {
   const [form, setForm] = useState({ name: '', clinic: '', email: '', phone: '', message: '' })
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
 
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSent(true)
+    setStatus('sending')
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      setStatus(res.ok ? 'success' : 'error')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -47,70 +74,98 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* Form */}
-        {sent ? (
-          <motion.div
-            className="flex flex-col items-center gap-4 py-16 text-center"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className="w-14 h-14 rounded-full bg-accent/10 border border-accent flex items-center justify-center">
-              <Check size={24} className="text-accent" />
-            </div>
-            <p className="font-display text-3xl text-heading">Message Sent!</p>
-            <p className="text-muted text-sm">We'll be in touch within 24 hours.</p>
-          </motion.div>
-        ) : (
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col gap-4"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {FIELDS.map(({ name, label, type, required }) => (
-                <motion.input
-                  key={name}
-                  type={type}
-                  name={name}
-                  value={form[name]}
-                  onChange={handleChange}
-                  placeholder={label}
-                  required={required}
-                  className={baseInput}
-                  whileFocus={{ scale: 1.005 }}
-                  transition={{ duration: 0.15 }}
-                />
-              ))}
-            </div>
-
-            <motion.textarea
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder="Message / Case Details"
-              required
-              rows={5}
-              className={`${baseInput} resize-none`}
-              whileFocus={{ scale: 1.005 }}
-              transition={{ duration: 0.15 }}
-            />
-
-            <motion.button
-              type="submit"
-              className="w-full bg-accent text-bg font-medium text-sm uppercase tracking-widest py-4 rounded-lg mt-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.15 }}
-              data-cursor="hover"
+        {/* Form / success / error states */}
+        <AnimatePresence mode="wait">
+          {status === 'success' ? (
+            <motion.div
+              key="success"
+              className="flex flex-col items-center gap-5 py-20 text-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
             >
-              Send Message
-            </motion.button>
-          </motion.form>
-        )}
+              <motion.div
+                className="w-16 h-16 rounded-full bg-accent/10 border border-accent flex items-center justify-center"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+              >
+                <Check size={28} className="text-accent" />
+              </motion.div>
+              <p className="font-display text-3xl md:text-4xl text-heading">Message Received!</p>
+              <p className="text-muted text-sm">We'll get back to you within 24 hours.</p>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="form"
+              onSubmit={handleSubmit}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="flex flex-col gap-4"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {FIELDS.map(({ name, label, type, required }) => (
+                  <motion.input
+                    key={name}
+                    type={type}
+                    name={name}
+                    value={form[name]}
+                    onChange={handleChange}
+                    placeholder={label}
+                    required={required}
+                    disabled={status === 'sending'}
+                    className={`${baseInput} disabled:opacity-50`}
+                    whileFocus={{ scale: 1.005 }}
+                    transition={{ duration: 0.15 }}
+                  />
+                ))}
+              </div>
 
-        {/* Contact info — stacks vertically on mobile, row on sm+ */}
+              <motion.textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                placeholder="Message / Case Details"
+                required
+                rows={5}
+                disabled={status === 'sending'}
+                className={`${baseInput} resize-none disabled:opacity-50`}
+                whileFocus={{ scale: 1.005 }}
+                transition={{ duration: 0.15 }}
+              />
+
+              {status === 'error' && (
+                <p className="text-red-400 text-xs text-center">
+                  Something went wrong, please try again.
+                </p>
+              )}
+
+              <motion.button
+                type="submit"
+                disabled={status === 'sending'}
+                className="w-full bg-accent text-bg font-medium text-sm uppercase tracking-widest py-4 rounded-lg mt-2 flex items-center justify-center gap-2 disabled:opacity-70"
+                whileHover={status !== 'sending' ? { scale: 1.02 } : {}}
+                whileTap={status !== 'sending' ? { scale: 0.98 } : {}}
+                transition={{ duration: 0.15 }}
+                data-cursor="hover"
+              >
+                {status === 'sending' ? (
+                  <>
+                    <Spinner />
+                    Sending…
+                  </>
+                ) : (
+                  'Send Message'
+                )}
+              </motion.button>
+            </motion.form>
+          )}
+        </AnimatePresence>
+
+        {/* Contact info */}
         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-5 sm:gap-8 mt-12 pt-10 border-t border-border">
           {CONTACT_INFO.map(({ Icon, label }) => (
             <div key={label} className="flex items-center gap-2.5">

@@ -5,9 +5,11 @@ import Cursor from './Cursor'
 import Navbar from './Navbar'
 import Hero from './Hero'
 import Services from './components/Services'
+import TeethShowcase from './components/TeethShowcase'
 import Gallery from './components/Gallery'
 import Process from './components/Process'
-import TeethShowcase from './components/TeethShowcase'
+import About from './About'
+import Contact from './Contact'
 import Footer from './components/Footer'
 
 function App() {
@@ -34,24 +36,8 @@ function App() {
       <Gallery />
       <Process />
       
-      {/* About & Contact Placeholders with Fluid Spacing */}
-      <section id="about" className="bg-surface flex flex-col items-center justify-center text-center">
-        <h2 className="font-display text-heading mb-6 italic">Our Legacy</h2>
-        <p className="max-w-2xl text-muted leading-relaxed">
-          Founded on the principles of traditional craftsmanship and digital innovation, 
-          Vicianum DS has become a trusted partner for dental clinics worldwide.
-        </p>
-      </section>
-
-      <section id="contact" className="bg-bg flex flex-col items-center justify-center text-center">
-        <h2 className="font-display text-heading mb-6">Start a Case</h2>
-        <p className="max-w-md text-muted mb-10">
-          Ready to elevate your clinical outcomes? Connect with our master technicians today.
-        </p>
-        <button className="bg-accent text-bg px-10 py-4 uppercase tracking-[0.2em] text-xs font-medium hover:bg-accent/90 transition-colors">
-          Contact Laboratory
-        </button>
-      </section>
+      <About />
+      <Contact />
 
       <Footer />
       

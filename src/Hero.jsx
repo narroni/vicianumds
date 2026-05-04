@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 
+const scrollToSection = (id) => {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 const HEADING_WORDS = [
   { text: 'Crafted', em: false },
   { text: 'for', em: false },
@@ -71,8 +76,8 @@ export default function Hero() {
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-6">
               <motion.a
-                href="#contact"
-                className="inline-flex items-center gap-2 bg-accent text-bg text-xs uppercase tracking-widest px-7 py-3.5 font-medium"
+                onClick={() => scrollToSection('contact')}
+                className="inline-flex items-center gap-2 bg-accent text-bg text-xs uppercase tracking-widest px-7 py-3.5 font-medium cursor-pointer"
                 whileHover={{ backgroundColor: '#7ab58e' }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ duration: 0.2 }}
@@ -83,8 +88,8 @@ export default function Hero() {
               </motion.a>
 
               <motion.a
-                href="#services"
-                className="inline-flex items-center gap-2 text-muted text-xs uppercase tracking-widest hover:text-accent transition-colors"
+                onClick={() => scrollToSection('services')}
+                className="inline-flex items-center gap-2 text-muted text-xs uppercase tracking-widest hover:text-accent transition-colors cursor-pointer"
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.2 }}
                 data-cursor="hover"

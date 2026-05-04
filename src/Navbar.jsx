@@ -4,6 +4,11 @@ import { Menu, X } from 'lucide-react'
 
 const NAV_LINKS = ['Services', 'Process', 'Work', 'About', 'Contact']
 
+const scrollToSection = (id) => {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -49,8 +54,8 @@ export default function Navbar() {
             {NAV_LINKS.map((link) => (
               <motion.a
                 key={link}
-                href={`#${link.toLowerCase()}`}
-                className="relative uppercase text-xs tracking-widest min-h-0"
+                onClick={() => scrollToSection(link.toLowerCase())}
+                className="relative uppercase text-xs tracking-widest min-h-0 cursor-pointer"
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
@@ -78,11 +83,12 @@ export default function Navbar() {
           {/* Right: CTA + hamburger */}
           <div className="flex items-center gap-3">
             <motion.a
-              href="#contact"
-              className="hidden md:inline-flex border border-accent text-accent text-xs uppercase tracking-widest px-5 py-2.5 min-h-0"
-              whileHover={{ backgroundColor: '#8FC49F', color: '#0F1712' }}
+              onClick={() => scrollToSection('contact')}
+              className="hidden md:inline-flex border border-accent text-accent text-xs uppercase tracking-widest px-5 py-2.5 min-h-0 cursor-pointer"
+              animate={{ scale: [1, 1.03, 1] }}
+              whileHover={{ backgroundColor: '#8FC49F', color: '#0F1712', scale: 1 }}
               whileTap={{ scale: 0.97 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1.5 }}
               data-cursor="hover"
             >
               Request a Quote
@@ -122,9 +128,8 @@ export default function Navbar() {
             {NAV_LINKS.map((link, i) => (
               <motion.a
                 key={link}
-                href={`#${link.toLowerCase()}`}
-                className="font-display text-2xl text-heading hover:text-accent transition-colors min-h-0"
-                onClick={closeMenu}
+                onClick={() => { scrollToSection(link.toLowerCase()); closeMenu() }}
+                className="font-display text-2xl text-heading hover:text-accent transition-colors min-h-0 cursor-pointer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 + i * 0.06, duration: 0.4 }}
@@ -135,9 +140,8 @@ export default function Navbar() {
 
             {/* CTA */}
             <motion.a
-              href="#contact"
-              className="mt-4 border border-accent text-accent text-xs uppercase tracking-widest px-6 py-3 hover:bg-accent hover:text-bg transition-colors"
-              onClick={closeMenu}
+              onClick={() => { scrollToSection('contact'); closeMenu() }}
+              className="mt-4 border border-accent text-accent text-xs uppercase tracking-widest px-6 py-3 hover:bg-accent hover:text-bg transition-colors cursor-pointer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.4 }}
