@@ -42,7 +42,7 @@ export const STATS = [
 // About — checklist under the stats row
 export const BULLETS = [
   'Digital & analog workflow',
-  '5–7 day turnaround',
+  'Fast turnaround times',
   'Direct technician contact',
 ]
 
@@ -99,7 +99,7 @@ export const PROCESS_STEPS = [
   { title: 'Send Your Case', description: 'Ship physical impressions or upload digital scans' },
   { title: 'We Fabricate',   description: 'Our lab crafts your restoration with clinical precision' },
   { title: 'Quality Check',  description: 'Every piece passes a strict QC protocol before leaving' },
-  { title: 'Fast Delivery',  description: 'Shipped directly to your clinic in 5–7 business days' },
+  { title: 'Fast Delivery',  description: 'Shipped directly to your clinic, ready to seat' },
 ]
 
 // Contact — info row shown under the form (icon, label)
