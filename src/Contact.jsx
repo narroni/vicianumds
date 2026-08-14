@@ -19,7 +19,7 @@ const FIELDS = [
 ]
 
 const baseInput =
-  'w-full bg-surface border border-border text-heading rounded-lg px-4 py-3 text-sm outline-none focus:border-accent placeholder:text-muted/40'
+  'w-full bg-surface border border-border text-heading rounded-lg px-4 py-3 text-sm outline-none focus:border-accent placeholder:text-muted/80'
 
 function Spinner() {
   return (
