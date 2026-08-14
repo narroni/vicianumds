@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { scrollToSection } from '../utils/scrollTo';
 import { NAV_LINKS } from '../content';

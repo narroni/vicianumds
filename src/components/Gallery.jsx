@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { GALLERY_IMAGES } from '../content';
 import ResponsiveImage from './ResponsiveImage';
