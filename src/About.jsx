@@ -1,12 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { STATS } from './content'
-
-const BULLETS = [
-  'Digital & analog workflow',
-  '5–7 day turnaround',
-  'Direct technician contact',
-]
+import { STATS, BULLETS } from './content'
 
 function CountUp({ target, suffix, triggered }) {
   const [display, setDisplay] = useState(0)

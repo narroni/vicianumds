@@ -37,6 +37,13 @@ export const STATS = [
   { value: 99,  suffix: '%', label: 'Satisfaction' },
 ]
 
+// About — checklist under the stats row
+export const BULLETS = [
+  'Digital & analog workflow',
+  '5–7 day turnaround',
+  'Direct technician contact',
+]
+
 // Services — one card per service. `icon` is the image path shown in the card.
 export const SERVICES = [
   {
