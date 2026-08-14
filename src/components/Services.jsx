@@ -44,9 +44,10 @@ export default function Services() {
             >
               {/* Icon Container - Maximized for premium impact */}
               <div className="w-full h-64 mb-6 flex items-center justify-center relative overflow-hidden rounded-xl">
-                <img 
-                  src={service.icon} 
-                  alt={service.title} 
+                <img
+                  src={service.icon}
+                  alt={service.title}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
