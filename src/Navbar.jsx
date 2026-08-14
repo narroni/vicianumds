@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { scrollToSection } from './utils/scrollTo'
 import { NAV_LINKS } from './content'
+import { COLOR_MUTED, COLOR_ACCENT, COLOR_BG } from './utils/colors'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -71,8 +72,8 @@ export default function Navbar() {
               >
                 <motion.span
                   variants={{
-                    rest:  { color: '#A8B5A0' },
-                    hover: { color: '#8FC49F' },
+                    rest:  { color: COLOR_MUTED },
+                    hover: { color: COLOR_ACCENT },
                   }}
                   transition={{ duration: 0.2 }}
                 >
@@ -94,7 +95,7 @@ export default function Navbar() {
               onClick={() => handleNav('contact')}
               className="hidden md:inline-flex border border-accent text-accent text-xs uppercase tracking-widest px-5 py-2.5 cursor-pointer bg-transparent"
               animate={{ scale: [1, 1.03, 1] }}
-              whileHover={{ backgroundColor: '#8FC49F', color: '#0F1712', scale: 1 }}
+              whileHover={{ backgroundColor: COLOR_ACCENT, color: COLOR_BG, scale: 1 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1.5 }}
               data-cursor="hover"

@@ -29,7 +29,7 @@ const Process = () => {
           {/* Vertical dashed line for mobile — runs behind all steps */}
           <div
             className="md:hidden absolute left-6 top-6 bottom-0 pointer-events-none"
-            style={{ width: '1px', borderLeft: '1px dashed #2E3F34' }}
+            style={{ width: '1px', borderLeft: '1px dashed var(--color-border)' }}
           />
 
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-0 md:gap-8">

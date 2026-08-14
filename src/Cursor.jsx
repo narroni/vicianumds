@@ -60,14 +60,14 @@ export default function Cursor() {
     <>
       <div ref={dotRef} style={{
         position: 'fixed', width: '8px', height: '8px',
-        background: '#8FC49F', borderRadius: '50%',
+        background: 'var(--color-accent)', borderRadius: '50%',
         pointerEvents: 'none', zIndex: 9999,
         transform: 'translate(-50%, -50%)',
         willChange: 'left, top', top: 0, left: 0
       }}/>
       <div ref={ringRef} style={{
         position: 'fixed', width: '28px', height: '28px',
-        border: '1.5px solid #8FC49F', borderRadius: '50%',
+        border: '1.5px solid var(--color-accent)', borderRadius: '50%',
         pointerEvents: 'none', zIndex: 9998,
         transform: 'translate(-50%, -50%)',
         opacity: 0.45, willChange: 'left, top', top: 0, left: 0

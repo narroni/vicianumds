@@ -13,8 +13,8 @@
 }
 
 :root {
-  background-color: #0F1712;
-  color: #A8B5A0;
+  background-color: var(--color-bg);
+  color: var(--color-muted);
   font-family: "Outfit", sans-serif;
   
   /* Fluid Spacing & Typography */
@@ -35,8 +35,8 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  background-color: #0F1712;
-  color: #A8B5A0;
+  background-color: var(--color-bg);
+  color: var(--color-muted);
   overflow-wrap: break-word;
 }
 
@@ -75,7 +75,7 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #8FC49F;
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 

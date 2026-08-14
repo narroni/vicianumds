@@ -4,7 +4,7 @@ import ResponsiveImage from './ResponsiveImage';
 
 export default function Services() {
   return (
-    <section id="services" className="bg-[#1C2B22] py-24 px-6 md:px-16">
+    <section id="services" className="bg-surface py-24 px-6 md:px-16">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">

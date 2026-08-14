@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown } from 'lucide-react'
 import { scrollToSection } from './utils/scrollTo'
 import { HEADING_WORDS } from './content'
 import { buildSrcSet, fallbackSrc } from './utils/images'
+import { COLOR_ACCENT_HOVER } from './utils/colors'
 
 // Base filenames for the generated responsive image set (see
 // scripts/optimize-images.mjs) — not full paths.
@@ -95,7 +96,7 @@ export default function Hero() {
               <motion.button
                 onClick={() => scrollToSection('contact')}
                 className="inline-flex items-center gap-2 bg-accent text-bg text-xs uppercase tracking-widest px-7 py-3.5 font-medium cursor-pointer border-none"
-                whileHover={{ backgroundColor: '#7ab58e' }}
+                whileHover={{ backgroundColor: COLOR_ACCENT_HOVER }}
                 whileTap={{ scale: 0.97 }}
                 data-cursor="hover"
               >
