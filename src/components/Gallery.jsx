@@ -26,15 +26,14 @@ const GalleryItem = ({ image, index, isMobile }) => {
           className="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-[1.06]"
         />
 
-        {/* Hover Overlay - Only on desktop or always visible label on mobile? 
-            User said dark overlay fades in showing label. I'll make it visible on mobile tap or hover. */}
+        {/* Desktop hover overlay */}
         <div className="absolute inset-0 bg-bg/50 opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-10 p-6">
           <p className="font-display italic text-white text-2xl md:text-3xl text-center transform translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
             {image.label}
           </p>
         </div>
-        
-        {/* Mobile Always-on Label if desired, but I'll stick to the overlay for consistency */}
+
+        {/* Mobile always-on label */}
         <div className="md:hidden absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-bg/80 to-transparent z-10">
            <p className="font-display italic text-white text-xl">{image.label}</p>
         </div>
