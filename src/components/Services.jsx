@@ -1,28 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const services = [
-  {
-    title: "Molar Crowns",
-    description: "High-quality, durable protection for weakened teeth.",
-    icon: "/images/crown.png",
-  },
-  {
-    title: "Dental Veneers",
-    description: "Custom-made shells for a flawless, natural-looking smile.",
-    icon: "/images/veneer.png",
-  },
-  {
-    title: "Dental Bridges",
-    description: "Seamlessly fill gaps and restore your bite's functionality.",
-    icon: "/images/bridge.png",
-  },
-  {
-    title: "Dental Implants",
-    description: "Permanent, gold-standard solutions for missing teeth.",
-    icon: "/images/implant.png",
-  }
-];
+import { SERVICES } from '../content';
 
 export default function Services() {
   return (
@@ -51,7 +29,7 @@ export default function Services() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
+          {SERVICES.map((service, index) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 30 }}

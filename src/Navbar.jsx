@@ -2,14 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { scrollToSection } from './utils/scrollTo'
-
-const NAV_LINKS = [
-  { name: 'About',    id: 'about'    },
-  { name: 'Services', id: 'services' },
-  { name: 'Process',  id: 'process'  },
-  { name: 'Work',     id: 'work'     },
-  { name: 'Contact',  id: 'contact'  },
-]
+import { NAV_LINKS } from './content'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)

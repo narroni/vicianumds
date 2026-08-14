@@ -1,14 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { scrollToSection } from '../utils/scrollTo';
-
-const navLinks = [
-  { name: 'About',    id: 'about'    },
-  { name: 'Services', id: 'services' },
-  { name: 'Process',  id: 'process'  },
-  { name: 'Work',     id: 'work'     },
-  { name: 'Contact',  id: 'contact'  },
-];
+import { NAV_LINKS } from '../content';
 
 const Footer = () => {
   return (
@@ -35,7 +28,7 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <button
               key={link.name}
               onClick={() => scrollToSection(link.id)}
@@ -48,7 +41,7 @@ const Footer = () => {
 
         <div className="text-center md:text-right">
           <p className="text-muted text-xs uppercase tracking-widest opacity-60">
-            © 2025 Vicianum DS. All rights reserved.
+            © {new Date().getFullYear()} Vicianum DS. All rights reserved.
           </p>
         </div>
       </div>

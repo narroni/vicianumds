@@ -1,23 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-
-const images = [
-  {
-    src: "/images/work.jpg",
-    label: "Masterful Craftsmanship",
-    className: "md:row-span-2 md:col-span-1"
-  },
-  {
-    src: "/images/portrait.jpg",
-    label: "Aesthetic Perfection",
-    className: "md:row-span-1 md:col-span-1"
-  },
-  {
-    src: "/images/lab.jpg",
-    label: "Technological Precision",
-    className: "md:row-span-1 md:col-span-1"
-  }
-];
+import { GALLERY_IMAGES } from '../content';
 
 const GalleryItem = ({ image, index, isMobile }) => {
   return (
@@ -103,7 +86,7 @@ const Gallery = () => {
             }
           `}
         >
-          {images.map((image, index) => (
+          {GALLERY_IMAGES.map((image, index) => (
             <GalleryItem key={index} image={image} index={index} isMobile={isMobile} />
           ))}
         </div>
@@ -111,7 +94,7 @@ const Gallery = () => {
         {/* Dot Indicators for Mobile */}
         {isMobile && (
           <div className="flex justify-center gap-2 mt-8">
-            {images.map((_, i) => (
+            {GALLERY_IMAGES.map((_, i) => (
               <div 
                 key={i}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-accent w-6' : 'bg-border'}`}

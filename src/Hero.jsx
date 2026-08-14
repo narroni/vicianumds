@@ -2,20 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { scrollToSection } from './utils/scrollTo'
+import { HEADING_WORDS } from './content'
 
 const BACKGROUND_IMAGES = [
   '/images/hero.jpg',
   '/images/lab.jpg',
   '/images/work.jpg',
-]
-
-const HEADING_WORDS = [
-  { text: 'Crafted', em: false },
-  { text: 'for', em: false },
-  { text: 'Dentists.', em: true },
-  { text: 'Built', em: false },
-  { text: 'for', em: false },
-  { text: 'Perfection.', em: true },
 ]
 
 const fadeUp = {

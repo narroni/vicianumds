@@ -1,12 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-
-const steps = [
-  { title: 'Send Your Case',  description: 'Ship physical impressions or upload digital scans' },
-  { title: 'We Fabricate',   description: 'Our lab crafts your restoration with clinical precision' },
-  { title: 'Quality Check',  description: 'Every piece passes a strict QC protocol before leaving' },
-  { title: 'Fast Delivery',  description: 'Shipped directly to your clinic in 5–7 business days' },
-]
+import { PROCESS_STEPS } from '../content'
 
 const Process = () => {
   return (
@@ -40,10 +34,10 @@ const Process = () => {
           />
 
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-0 md:gap-8">
-            {steps.map((step, index) => (
+            {PROCESS_STEPS.map((step, index) => (
               <div key={index} className="flex-1 relative group">
                 {/* Desktop horizontal connector */}
-                {index < steps.length - 1 && (
+                {index < PROCESS_STEPS.length - 1 && (
                   <div className="hidden md:block absolute top-6 left-[calc(50%+24px)] w-[calc(100%-48px)] h-px pointer-events-none">
                     <motion.div
                       initial={{ scaleX: 0 }}
@@ -58,7 +52,7 @@ const Process = () => {
 
                 {/* Mobile: flex-row (circle left, text right) | Desktop: flex-col centered */}
                 <div className={`flex flex-row md:flex-col md:items-center md:text-center items-start gap-4 md:gap-0 ${
-                  index < steps.length - 1 ? 'pb-14' : 'pb-0'
+                  index < PROCESS_STEPS.length - 1 ? 'pb-14' : 'pb-0'
                 } md:pb-0`}>
                   {/* Number circle */}
                   <motion.div

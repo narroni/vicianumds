@@ -1,22 +1,10 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Phone, MapPin, Check } from 'lucide-react'
+import { Check } from 'lucide-react'
+import { CONTACT_INFO, CONTACT_FIELDS } from './content'
 
 // Set VITE_FORMSPREE_ENDPOINT in your .env — see .env.example
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT
-
-const CONTACT_INFO = [
-  { Icon: Mail,   label: 'info@vicianumds.com' },
-  { Icon: Phone,  label: '+383 44 123 456' },
-  { Icon: MapPin, label: 'Prishtina, Kosovo' },
-]
-
-const FIELDS = [
-  { name: 'name',    label: 'Full Name',             type: 'text',  required: true },
-  { name: 'clinic',  label: 'Clinic / Practice Name', type: 'text',  required: true },
-  { name: 'email',   label: 'Email',                  type: 'email', required: true },
-  { name: 'phone',   label: 'Phone (optional)',        type: 'tel',   required: false },
-]
 
 const baseInput =
   'w-full bg-surface border border-border text-heading rounded-lg px-4 py-3 text-sm outline-none focus:border-accent placeholder:text-muted/80'
@@ -121,7 +109,7 @@ export default function Contact() {
               className="flex flex-col gap-4"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {FIELDS.map(({ name, label, type, required }) => (
+                {CONTACT_FIELDS.map(({ name, label, type, required }) => (
                   <div key={name}>
                     <label htmlFor={`contact-${name}`} className="sr-only">{label}</label>
                     <motion.input

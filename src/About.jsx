@@ -1,11 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-
-const STATS = [
-  { value: 500, suffix: '+', label: 'Cases' },
-  { value: 10,  suffix: '+', label: 'Years' },
-  { value: 99,  suffix: '%', label: 'Satisfaction' },
-]
+import { STATS } from './content'
 
 const BULLETS = [
   'Digital & analog workflow',
