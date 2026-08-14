@@ -102,7 +102,8 @@ export default function Navbar() {
             <button
               className="md:hidden text-muted w-11 h-11 flex items-center justify-center border-none bg-transparent"
               onClick={() => setMobileOpen((v) => !v)}
-              aria-label="Toggle menu"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -120,14 +121,6 @@ export default function Navbar() {
             exit={{ y: '-100%' }}
             transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
           >
-            <button
-              className="absolute top-5 right-5 w-11 h-11 flex items-center justify-center text-muted border-none bg-transparent"
-              onClick={() => setMobileOpen(false)}
-              aria-label="Close menu"
-            >
-              <X size={22} />
-            </button>
-
             {NAV_LINKS.map((link, i) => (
               <motion.button
                 key={link.name}
