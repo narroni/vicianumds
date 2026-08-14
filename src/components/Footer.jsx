@@ -16,12 +16,13 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
         <div className="flex flex-col gap-3 items-center md:items-start">
-          <button
-            onClick={() => scrollToSection('top')}
+          <a
+            href="#hero"
+            onClick={(e) => { e.preventDefault(); scrollToSection('top') }}
             className="font-display text-3xl text-heading cursor-pointer border-none bg-transparent p-0"
           >
             Vicianum<span className="text-accent">DS</span>
-          </button>
+          </a>
           <p className="text-muted text-xs uppercase tracking-[0.2em] font-medium">
             Precision Dental Solutions
           </p>
@@ -29,13 +30,14 @@ const Footer = () => {
 
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
           {NAV_LINKS.map((link) => (
-            <button
+            <a
               key={link.name}
-              onClick={() => scrollToSection(link.id)}
+              href={`#${link.id}`}
+              onClick={(e) => { e.preventDefault(); scrollToSection(link.id) }}
               className="text-muted text-sm uppercase tracking-widest hover:text-accent transition-colors duration-300 py-3 px-2 cursor-pointer border-none bg-transparent"
             >
               {link.name}
-            </button>
+            </a>
           ))}
         </div>
 

@@ -24,6 +24,14 @@ export default function Navbar() {
     scrollToSection(id)
   }
 
+  // Anchors keep a real href for no-JS/middle-click/right-click; when JS is
+  // available we intercept the click and use the smooth scrollToSection
+  // animation instead of the browser's instant jump.
+  const handleNavClick = (id) => (e) => {
+    e.preventDefault()
+    handleNav(id)
+  }
+
   return (
     <>
       <motion.nav
@@ -39,20 +47,22 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-5 md:px-6 flex items-center justify-between">
 
           {/* Logo → scroll to top */}
-          <button
-            onClick={() => handleNav('top')}
+          <a
+            href="#hero"
+            onClick={handleNavClick('top')}
             className="font-display text-2xl font-bold text-heading leading-none cursor-pointer border-none bg-transparent p-0"
             data-cursor="hover"
           >
             Vicianum<span className="text-accent">DS</span>
-          </button>
+          </a>
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-10">
             {NAV_LINKS.map((link) => (
-              <motion.button
+              <motion.a
                 key={link.name}
-                onClick={() => handleNav(link.id)}
+                href={`#${link.id}`}
+                onClick={handleNavClick(link.id)}
                 className="relative uppercase text-xs tracking-widest cursor-pointer border-none bg-transparent p-0"
                 initial="rest"
                 whileHover="hover"
@@ -74,7 +84,7 @@ export default function Navbar() {
                   variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
                   transition={{ duration: 0.25, ease: 'easeOut' }}
                 />
-              </motion.button>
+              </motion.a>
             ))}
           </div>
 
@@ -115,16 +125,17 @@ export default function Navbar() {
             transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
           >
             {NAV_LINKS.map((link, i) => (
-              <motion.button
+              <motion.a
                 key={link.name}
-                onClick={() => handleNav(link.id)}
+                href={`#${link.id}`}
+                onClick={handleNavClick(link.id)}
                 className="font-display text-3xl font-bold text-heading hover:text-accent transition-colors cursor-pointer border-none bg-transparent"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 + i * 0.06, duration: 0.4 }}
               >
                 {link.name}
-              </motion.button>
+              </motion.a>
             ))}
 
             <motion.button
