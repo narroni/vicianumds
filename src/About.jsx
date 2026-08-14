@@ -73,6 +73,8 @@ export default function About() {
             <span className="text-accent text-xs uppercase tracking-widest">About Us</span>
           </div>
 
+          <h2 className="sr-only">About Vicianum DS</h2>
+
           {/* Quote — 2xl mobile → 4xl desktop */}
           <blockquote className="font-display italic text-3xl md:text-5xl font-bold text-heading leading-[1.2] mb-6 md:mb-8">
             "Every restoration we craft is a commitment to your patient's smile."
