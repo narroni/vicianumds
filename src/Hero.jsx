@@ -18,6 +18,17 @@ const fadeUp = {
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
+  // Preload each slide once here — the background layer and the circular
+  // thumbnail below both render the same URL, so this is the single shared
+  // fetch/decode; without it, each element would independently trigger its
+  // own load the first time a given slide becomes active.
+  useEffect(() => {
+    BACKGROUND_IMAGES.forEach((src) => {
+      const img = new Image()
+      img.src = src
+    })
+  }, [])
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % BACKGROUND_IMAGES.length)
