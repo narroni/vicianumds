@@ -56,7 +56,7 @@ export default function About() {
             whileHover={{ y: -4 }}
             transition={{ duration: 0.2 }}
           >
-            <p className="font-display text-xl md:text-2xl text-heading leading-none">Est. 2014</p>
+            <p className="font-display text-xl md:text-2xl text-heading leading-none">Est. 2025</p>
             <p className="text-muted text-[10px] uppercase tracking-widest mt-1">Vicianum DS</p>
           </motion.div>
         </motion.div>
