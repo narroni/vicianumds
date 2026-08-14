@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { GALLERY_IMAGES } from '../content';
+import ResponsiveImage from './ResponsiveImage';
 
 const GalleryItem = ({ image, index, isMobile }) => {
   return (
@@ -17,10 +18,11 @@ const GalleryItem = ({ image, index, isMobile }) => {
 
       {/* Image Container */}
       <div className="w-full h-full relative overflow-hidden">
-        <img
-          src={image.src}
+        <ResponsiveImage
+          name={image.src}
           alt={image.label}
           loading="lazy"
+          sizes="(min-width: 768px) 45vw, 100vw"
           className="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-[1.06]"
         />
 

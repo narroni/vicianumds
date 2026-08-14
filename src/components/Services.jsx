@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SERVICES } from '../content';
+import ResponsiveImage from './ResponsiveImage';
 
 export default function Services() {
   return (
@@ -44,10 +45,11 @@ export default function Services() {
             >
               {/* Icon Container - Maximized for premium impact */}
               <div className="w-full h-64 mb-6 flex items-center justify-center relative overflow-hidden rounded-xl">
-                <img
-                  src={service.icon}
+                <ResponsiveImage
+                  name={service.icon}
                   alt={service.title}
                   loading="lazy"
+                  sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>

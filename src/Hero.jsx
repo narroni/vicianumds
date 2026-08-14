@@ -3,12 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { scrollToSection } from './utils/scrollTo'
 import { HEADING_WORDS } from './content'
+import { buildSrcSet, fallbackSrc } from './utils/images'
 
-const BACKGROUND_IMAGES = [
-  '/images/hero.jpg',
-  '/images/lab.jpg',
-  '/images/work.jpg',
-]
+// Base filenames for the generated responsive image set (see
+// scripts/optimize-images.mjs) — not full paths.
+const BACKGROUND_IMAGES = ['hero', 'lab', 'work']
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -23,9 +22,9 @@ export default function Hero() {
   // fetch/decode; without it, each element would independently trigger its
   // own load the first time a given slide becomes active.
   useEffect(() => {
-    BACKGROUND_IMAGES.forEach((src) => {
+    BACKGROUND_IMAGES.forEach((name) => {
       const img = new Image()
-      img.src = src
+      img.src = fallbackSrc(name)
     })
   }, [])
 
@@ -41,16 +40,23 @@ export default function Hero() {
       {/* Background Slideshow */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
-          <motion.div
+          <motion.picture
             key={currentSlide}
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 0.3, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 1.5, ease: 'easeInOut' }}
-            className="absolute inset-0"
+            className="absolute inset-0 block"
           >
-            <img src={BACKGROUND_IMAGES[currentSlide]} alt="" className="w-full h-full object-cover" />
-          </motion.div>
+            <source type="image/webp" srcSet={buildSrcSet(BACKGROUND_IMAGES[currentSlide], 'webp')} sizes="100vw" />
+            <img
+              src={fallbackSrc(BACKGROUND_IMAGES[currentSlide])}
+              srcSet={buildSrcSet(BACKGROUND_IMAGES[currentSlide], 'jpg')}
+              sizes="100vw"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </motion.picture>
         </AnimatePresence>
         <div className="absolute inset-0 bg-bg/80 md:bg-bg/60" />
       </div>
@@ -123,16 +129,23 @@ export default function Hero() {
             />
             <div className="absolute inset-4 rounded-full overflow-hidden bg-surface shadow-[0_0_60px_rgba(143,196,159,0.15)] border border-white/5">
               <AnimatePresence mode="wait">
-                <motion.img
+                <motion.picture
                   key={currentSlide}
-                  src={BACKGROUND_IMAGES[currentSlide]}
-                  alt="Lab showcase"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.8 }}
-                  className="w-full h-full object-cover"
-                />
+                  className="block w-full h-full"
+                >
+                  <source type="image/webp" srcSet={buildSrcSet(BACKGROUND_IMAGES[currentSlide], 'webp')} sizes="400px" />
+                  <img
+                    src={fallbackSrc(BACKGROUND_IMAGES[currentSlide])}
+                    srcSet={buildSrcSet(BACKGROUND_IMAGES[currentSlide], 'jpg')}
+                    sizes="400px"
+                    alt="Lab showcase"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.picture>
               </AnimatePresence>
             </div>
             <div className="absolute bottom-6 right-[-28px] bg-surface border border-border px-5 py-4">

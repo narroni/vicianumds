@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { STATS, BULLETS } from './content'
+import ResponsiveImage from './components/ResponsiveImage'
 
 function CountUp({ target, suffix, triggered }) {
   const [display, setDisplay] = useState(0)
@@ -40,10 +41,11 @@ export default function About() {
         >
           <div className="relative rounded-2xl overflow-hidden bg-bg"
                style={{ height: '320px' }}>
-            <img
-              src="/images/portrait.jpg"
+            <ResponsiveImage
+              name="portrait"
               alt="Vicianum DS lab technician"
               loading="lazy"
+              sizes="(min-width: 768px) 50vw, 100vw"
               className="w-full h-full object-cover"
             />
           </div>

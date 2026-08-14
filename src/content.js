@@ -44,45 +44,49 @@ export const BULLETS = [
   'Direct technician contact',
 ]
 
-// Services — one card per service. `icon` is the image path shown in the card.
+// Services — one card per service. `icon` is the base filename for the
+// generated responsive image set (e.g. "crown" → crown-400/700/1024.webp/.jpg
+// via scripts/optimize-images.mjs), rendered through <ResponsiveImage>.
 export const SERVICES = [
   {
     title: "Molar Crowns",
     description: "High-quality, durable protection for weakened teeth.",
-    icon: "/images/crown.png",
+    icon: "crown",
   },
   {
     title: "Dental Veneers",
     description: "Custom-made shells for a flawless, natural-looking smile.",
-    icon: "/images/veneer.png",
+    icon: "veneer",
   },
   {
     title: "Dental Bridges",
     description: "Seamlessly fill gaps and restore your bite's functionality.",
-    icon: "/images/bridge.png",
+    icon: "bridge",
   },
   {
     title: "Dental Implants",
     description: "Permanent, gold-standard solutions for missing teeth.",
-    icon: "/images/implant.png",
+    icon: "implant",
   }
 ]
 
 // Gallery ("The Work") — showcase images with captions.
-// `className` controls the tile's placement/size in the desktop grid.
+// `src` is the base filename for the generated responsive image set
+// (see SERVICES above). `className` controls the tile's placement/size
+// in the desktop grid.
 export const GALLERY_IMAGES = [
   {
-    src: "/images/work.jpg",
+    src: "work",
     label: "Masterful Craftsmanship",
     className: "md:row-span-2 md:col-span-1"
   },
   {
-    src: "/images/portrait.jpg",
+    src: "portrait",
     label: "Aesthetic Perfection",
     className: "md:row-span-1 md:col-span-1"
   },
   {
-    src: "/images/lab.jpg",
+    src: "lab",
     label: "Technological Precision",
     className: "md:row-span-1 md:col-span-1"
   }
