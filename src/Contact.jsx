@@ -174,13 +174,20 @@ export default function Contact() {
 
         {/* Contact info */}
         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-5 sm:gap-8 mt-12 pt-10 border-t border-border">
-          {CONTACT_INFO.map(({ Icon, label, href, ariaLabel }) => {
+          {CONTACT_INFO.map(({ Icon, label, href, ariaLabel, external }) => {
             const Wrapper = href ? 'a' : 'div'
+            const linkProps = href
+              ? {
+                  href,
+                  ...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
+                  ...(ariaLabel ? { 'aria-label': ariaLabel } : {}),
+                }
+              : {}
             return (
               <Wrapper
                 key={label}
                 className="flex items-center gap-2.5 group"
-                {...(href ? { href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': ariaLabel } : {})}
+                {...linkProps}
               >
                 <Icon size={15} className="text-accent flex-shrink-0" />
                 <span className={`text-muted text-sm ${href ? 'group-hover:text-accent transition-colors duration-300' : ''}`}>

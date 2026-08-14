@@ -104,17 +104,19 @@ export const PROCESS_STEPS = [
 ]
 
 // Contact — info row shown under the form (icon, label).
-// `href` + `ariaLabel` are optional — only set for entries that should
-// render as a real link (e.g. Instagram) rather than plain display text.
+// `href` is optional — only set for entries that should render as a real
+// link rather than plain display text. `external` opens it in a new tab
+// (only relevant for real URLs, not mailto:/tel:). `ariaLabel` is optional.
 export const CONTACT_INFO = [
-  { Icon: Mail,   label: 'dokifejk@gmail.com' },
-  { Icon: Phone,  label: '+383 44 554 645' },
+  { Icon: Mail,   label: 'dokifejk@gmail.com', href: 'mailto:dokifejk@gmail.com' },
+  { Icon: Phone,  label: '+383 44 554 645', href: 'tel:+38344554645' },
   { Icon: MapPin, label: 'Prishtina, Kosovo' },
   {
     Icon: InstagramIcon,
     label: '@vicianumds',
     href: 'https://www.instagram.com/vicianumds/',
     ariaLabel: 'Vicianum Dental Studio on Instagram',
+    external: true,
   },
 ]
 
