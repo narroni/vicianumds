@@ -49,16 +49,6 @@ export default function About() {
               className="w-full h-full object-cover"
             />
           </div>
-
-          {/* Floating badge */}
-          <motion.div
-            className="absolute bottom-6 left-[-12px] md:left-[-20px] bg-bg border border-border px-4 py-3 md:px-5 md:py-4"
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.2 }}
-          >
-            <p className="font-display text-xl md:text-2xl text-heading leading-none">Est. 2025</p>
-            <p className="text-muted text-[10px] uppercase tracking-widest mt-1">Vicianum DS</p>
-          </motion.div>
         </motion.div>
 
         {/* ── Text — second on mobile, left column on desktop ── */}
