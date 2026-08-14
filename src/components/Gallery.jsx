@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { GALLERY_IMAGES } from '../content';
 import ResponsiveImage from './ResponsiveImage';
 
