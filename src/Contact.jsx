@@ -122,23 +122,28 @@ export default function Contact() {
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {FIELDS.map(({ name, label, type, required }) => (
-                  <motion.input
-                    key={name}
-                    type={type}
-                    name={name}
-                    value={form[name]}
-                    onChange={handleChange}
-                    placeholder={label}
-                    required={required}
-                    disabled={status === 'sending'}
-                    className={`${baseInput} disabled:opacity-50`}
-                    whileFocus={{ scale: 1.005 }}
-                    transition={{ duration: 0.15 }}
-                  />
+                  <div key={name}>
+                    <label htmlFor={`contact-${name}`} className="sr-only">{label}</label>
+                    <motion.input
+                      id={`contact-${name}`}
+                      type={type}
+                      name={name}
+                      value={form[name]}
+                      onChange={handleChange}
+                      placeholder={label}
+                      required={required}
+                      disabled={status === 'sending'}
+                      className={`${baseInput} disabled:opacity-50`}
+                      whileFocus={{ scale: 1.005 }}
+                      transition={{ duration: 0.15 }}
+                    />
+                  </div>
                 ))}
               </div>
 
+              <label htmlFor="contact-message" className="sr-only">Message / Case Details</label>
               <motion.textarea
+                id="contact-message"
                 name="message"
                 value={form.message}
                 onChange={handleChange}
