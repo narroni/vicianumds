@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, Phone, MapPin, Check } from 'lucide-react'
 
-// Replace with your Formspree endpoint: https://formspree.io/f/XXXXXXXX
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/XXXXXXXX'
+// Set VITE_FORMSPREE_ENDPOINT in your .env — see .env.example
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT
 
 const CONTACT_INFO = [
   { Icon: Mail,   label: 'info@vicianumds.com' },
@@ -38,12 +38,20 @@ function Spinner() {
 export default function Contact() {
   const [form, setForm] = useState({ name: '', clinic: '', email: '', phone: '', message: '' })
   const [status, setStatus] = useState('idle') // idle | sending | success | error
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!FORMSPREE_ENDPOINT) {
+      setStatus('error')
+      setErrorMessage('This form is not configured yet. Please email us directly instead.')
+      return
+    }
+
     setStatus('sending')
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -51,9 +59,15 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-      setStatus(res.ok ? 'success' : 'error')
+      if (res.ok) {
+        setStatus('success')
+      } else {
+        setStatus('error')
+        setErrorMessage('Something went wrong, please try again.')
+      }
     } catch {
       setStatus('error')
+      setErrorMessage('Something went wrong, please try again.')
     }
   }
 
@@ -139,7 +153,7 @@ export default function Contact() {
 
               {status === 'error' && (
                 <p className="text-red-400 text-xs text-center">
-                  Something went wrong, please try again.
+                  {errorMessage}
                 </p>
               )}
 
