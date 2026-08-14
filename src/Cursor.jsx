@@ -1,11 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Cursor() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
+  const [enabled, setEnabled] = useState(false)
+
+  // A fine pointer (mouse/trackpad) may be attached or detached at any
+  // time — hybrid touch+mouse laptops report both, so we track this
+  // live via matchMedia rather than a one-time 'ontouchstart' check.
+  useEffect(() => {
+    const mql = window.matchMedia('(pointer: fine)')
+    const update = () => setEnabled(mql.matches)
+    update()
+    mql.addEventListener('change', update)
+    return () => mql.removeEventListener('change', update)
+  }, [])
 
   useEffect(() => {
-    if ('ontouchstart' in window) return
+    if (!enabled) return
+
+    // Only hide the system cursor once the custom cursor is actually mounted.
+    document.body.style.cursor = 'none'
 
     let mouseX = 0, mouseY = 0
     let ringX = 0, ringY = 0
@@ -35,10 +50,11 @@ export default function Cursor() {
     return () => {
       window.removeEventListener('mousemove', onMove)
       cancelAnimationFrame(raf)
+      document.body.style.cursor = ''
     }
-  }, [])
+  }, [enabled])
 
-  if (typeof window !== 'undefined' && 'ontouchstart' in window) return null
+  if (!enabled) return null
 
   return (
     <>
