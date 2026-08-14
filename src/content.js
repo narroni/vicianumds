@@ -31,9 +31,11 @@ export const HEADING_WORDS = [
 ]
 
 // About — the count-up stats row (500+, 10+, 99%)
+// Note: the "10+" stat is the lead technician's personal experience, not
+// the studio's age (studio was founded 2025 — see the "Est. 2025" badge).
 export const STATS = [
   { value: 500, suffix: '+', label: 'Cases' },
-  { value: 10,  suffix: '+', label: 'Years' },
+  { value: 10,  suffix: '+', label: 'Years Technician Experience' },
   { value: 99,  suffix: '%', label: 'Satisfaction' },
 ]
 
