@@ -8,6 +8,7 @@
 // ────────────────────────────────────────────────────────────────
 
 import { Mail, Phone, MapPin } from 'lucide-react'
+import InstagramIcon from './components/icons/InstagramIcon'
 
 // Navbar + Footer — section links. `name` is the visible label,
 // `id` must match the target section's id attribute.
@@ -102,11 +103,19 @@ export const PROCESS_STEPS = [
   { title: 'Fast Delivery',  description: 'Shipped directly to your clinic, ready to seat' },
 ]
 
-// Contact — info row shown under the form (icon, label)
+// Contact — info row shown under the form (icon, label).
+// `href` + `ariaLabel` are optional — only set for entries that should
+// render as a real link (e.g. Instagram) rather than plain display text.
 export const CONTACT_INFO = [
   { Icon: Mail,   label: 'dokifejk@gmail.com' },
   { Icon: Phone,  label: '+383 44 554 645' },
   { Icon: MapPin, label: 'Prishtina, Kosovo' },
+  {
+    Icon: InstagramIcon,
+    label: '@vicianumds',
+    href: 'https://www.instagram.com/vicianumds/',
+    ariaLabel: 'Vicianum Dental Studio on Instagram',
+  },
 ]
 
 // Contact — form field definitions (name must match the state key in Contact.jsx)
