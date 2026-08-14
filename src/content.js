@@ -102,7 +102,7 @@ export const PROCESS_STEPS = [
 
 // Contact — info row shown under the form (icon, label)
 export const CONTACT_INFO = [
-  { Icon: Mail,   label: 'info@vicianumds.com' },
+  { Icon: Mail,   label: 'dokifejk@gmail.com' },
   { Icon: Phone,  label: '+383 44 123 456' },
   { Icon: MapPin, label: 'Prishtina, Kosovo' },
 ]
