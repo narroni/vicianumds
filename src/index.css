@@ -3,8 +3,10 @@
 @theme {
   --color-bg: #0F1712;
   --color-surface: #1C2B22;
+  --color-surface-2: #24362B; /* card elevation on top of surface-colored sections */
   --color-border: #2E3F34;
   --color-accent: #8FC49F;
+  --color-accent-hover: #7ab58e; /* darkened accent for button hover states */
   --color-heading: #EDE9E2;
   --color-muted: #A8B5A0;
 

@@ -40,7 +40,7 @@ export default function Services() {
                 scale: 1.05,
                 boxShadow: "0 20px 40px rgba(143, 196, 159, 0.15)"
               }}
-              className="bg-[#24362B] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center group transition-all duration-300"
+              className="bg-surface-2 border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center group transition-all duration-300"
             >
               {/* Icon Container - Maximized for premium impact */}
               <div className="w-full h-64 mb-6 flex items-center justify-center relative overflow-hidden rounded-xl">
