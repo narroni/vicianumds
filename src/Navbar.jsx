@@ -51,9 +51,11 @@ export default function Navbar() {
           <a
             href="#hero"
             onClick={handleNavClick('top')}
-            className="font-display text-2xl font-bold text-heading leading-none cursor-pointer border-none bg-transparent p-0"
+            aria-label="Vicianum Dental Studio — scroll to top"
+            className="flex items-center gap-2 font-display text-2xl font-bold text-heading leading-none cursor-pointer border-none bg-transparent p-0"
             data-cursor="hover"
           >
+            <img src="/images/logo-nav.png" alt="" className="h-[17px] w-[17px] flex-shrink-0" />
             Vicianum<span className="text-accent">DS</span>
           </a>
 
