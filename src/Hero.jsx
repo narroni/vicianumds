@@ -107,12 +107,12 @@ export default function Hero() {
 
         {/* Right: circular image */}
         <motion.div
-          className="hidden md:flex flex-col items-center justify-center"
+          className="hidden md:flex flex-col items-center justify-center min-w-0 w-full"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.8, ease: 'easeOut' }}
         >
-          <div className="relative w-[320px] md:w-[400px] aspect-square">
+          <div className="relative w-full max-w-[400px] aspect-square">
             <motion.div
               className="absolute inset-[-20px] rounded-full border border-dashed border-accent/30"
               animate={{ rotate: 360 }}
